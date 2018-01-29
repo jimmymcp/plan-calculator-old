@@ -7,6 +7,7 @@ function initUI()
   menuEntries.push({name: "Insert Away Date Constraints", functionName: "insertAwayDateContraints"});
   menuEntries.push({name: "Update Candidates for Duties", functionName: "updateCandidatesForDuties2"});
   menuEntries.push({name: "Calculate Plan", functionName: "calculatePlan"});
+  menuEntries.push({name: "Write Away Date Summary", functionName: "awayDateSummary"});
   spreadsheet.addMenu('Plan', menuEntries);
 }
 

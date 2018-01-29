@@ -50,6 +50,11 @@ function calculatePlan() {
   writeArrayToSheet(dutyArray,'Duties');
 }
 
+function awayDateSummary() {
+  awayDateArray = readArrayFromSheet('Away Date Data');
+  writeAwayDateSummary();
+}
+
 function test() {
   dutyArray = readArrayFromSheet('Duties');
   constraintSetupArray = readArrayFromSheet('Constraint Setup');  

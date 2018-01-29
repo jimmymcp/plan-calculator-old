@@ -51,4 +51,49 @@ function writeDutyConstraint(dutyNo,memberCode,reason) {
 }
   
 function writeAwayDateSummary() {
+  var sheet = spreadsheet.getSheetByName('Away Date Summary');
+
+  sheet.clear();
+
+  var startDate = getFirstGivenDayOfWeekAfterDate(0,getStartDate()); //0 = Sunday
+  var endDate = getEndDate();
+
+  var awayDateSummaryArray = [];
+
+  while (startDate <= endDate) {
+    sheet.appendRow([startDate,getAwayDateSummaryForDate(startDate)]);
+    startDate = addDaysToDate(7,startDate);
+  }
+
+  writeArrayToSheet(awayDateSummaryArray,'Away Date Summary');
+}
+
+function getAwayDateSummaryForDate(date) {
+  var awayDatesOnDate = getAwayDatesByDate(date);
+  var summary = '';
+  for (var i = 0; i < awayDatesOnDate.length; i++) {
+    summary += ',' + awayDatesOnDate[i][0];
+  }
+
+  if (summary.length > 0) {
+    return summary.substr(1,summary.length - 1);
+  }
+  else {
+    return '';
+  }
+}
+
+function getAwayDatesByDate(date) {
+  return awayDateArray.filter(awayDatesByDateFilter(date));
+}
+
+function awayDatesByDateFilter(date) {
+  return function(element) {
+    if ((element[1].getTime() == date.getTime()) && element[2] == 'Away') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
