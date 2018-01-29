@@ -12,7 +12,7 @@ function populateAwayDateData() {
       if (awayDateArray2[row][column] != '')
       {
         var awayDate = new Date(awayDateArray2[row][0]);        
-        awayDateArray.push([memberCode,awayDate]);
+        awayDateArray.push([memberCode,awayDate,awayDateArray2[row][column]]);
       }
     }
   }
