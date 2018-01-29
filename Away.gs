@@ -1,6 +1,3 @@
-function memberIsAwayOnDate(memberCode,date){
-}
-
 function populateAwayDateData() {  
   var sheet = spreadsheet.getSheetByName('Away Dates');
   var awayDateArray2 = sheet.getRange(1, 1, sheet.getLastRow(),sheet.getLastColumn()).getValues();
@@ -16,19 +13,6 @@ function populateAwayDateData() {
       }
     }
   }
-}
-
-function updateAwayDateDataFromArray() {
-  var sheet = spreadsheet.getSheetByName('Away Date Data');
-  sheet.clear();
-  for (var i = 0; i < awayDateArray.length; i++) {
-    sheet.appendRow([awayDateArray[i][0],awayDateArray[i][1]]);
-  }
-}
-
-function readAwayDateArray() {
-  var sheet = spreadsheet.getSheetByName('Away Date Data');
-  awayDateArray = sheet.getRange(1,1,sheet.getLastRow(),sheet.getLastColumn()).getValues();
 }
 
 function populateConstraintsForAwayDates() {
