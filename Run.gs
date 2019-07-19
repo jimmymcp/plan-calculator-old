@@ -29,6 +29,19 @@ function insertAwayDateContraints() {
   writeArrayToSheet(dutyConstraintArray,'Duty Constraint');
 }
 
+function updateDutyConstraints() {
+  dutySetupArray = readArrayFromSheet('Duty Setup');
+  dutyArray = readArrayFromSheet('Duties');
+  dutyConstraintArray = readArrayFromSheet('Duty Constraint');
+  populateMemberDutyArray();
+  constraintSetupArray = readArrayFromSheet('Constraint Setup');
+
+  plannedDuties = getPlannedDuties();
+  plannedDuties.forEach(function(element){updateConstraintsForDuty(element[0])});
+
+  writeArrayToSheet(dutyConstraintArray,'Duty Constraint');
+}
+
 function updateCandidatesForDuties2() {
   dutySetupArray = readArrayFromSheet('Duty Setup');
   dutyArray = readArrayFromSheet('Duties');

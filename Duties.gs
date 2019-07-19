@@ -22,6 +22,21 @@ function dutyNoFilter(dutyNo) {
   }
 }
 
+function getPlannedDuties() {
+  return dutyArray.filter(plannedDutyFilter());
+}
+
+function plannedDutyFilter() {
+  return function(element) {
+    if (element[4] != "") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
+
 function getIndexOfDutyNo(dutyNo) {
   for (var i = 0; i < dutyArray.length; i++) {
     if (dutyArray[i][0] == dutyNo) {
