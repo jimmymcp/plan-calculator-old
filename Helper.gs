@@ -5,7 +5,7 @@ function initUI()
   menuEntries.push({name: "Insert Duties", functionName: "insertDuties"});
   menuEntries.push({name: "Insert Away Dates", functionName: "insertAwayDates"});  
   menuEntries.push({name: "Insert Away Date Constraints", functionName: "insertAwayDateContraints"});
-  menuEntries.push({name: "Update Duty Contraints", functionName: "updateDutyConstraints"})
+  menuEntries.push({name: "Update Duty Constraints", functionName: "updateDutyConstraints"})
   menuEntries.push({name: "Update Candidates for Duties", functionName: "updateCandidatesForDuties2"});
   menuEntries.push({name: "Calculate Plan", functionName: "calculatePlan"});
   menuEntries.push({name: "Write Away Date Summary", functionName: "awayDateSummary"});
