@@ -28,7 +28,7 @@ function getPlannedDuties() {
 
 function plannedDutyFilter() {
   return function(element) {
-    if (element[4] != "") {
+    if ((element[4] != "") && (element[4] != "Member")) {
       return true;
     }
     else {
