@@ -33,6 +33,22 @@ function populateMemberDutyArray() {
   }  
 }
 
+function memberDoesDuty(memberCode, dutyCode) {
+  var filteredMemberDutyArray = memberDutyArray.filter(filterMemberDutiesByMemberAndDutyCode(memberCode, dutyCode));
+  return filteredMemberDutyArray.length > 0;
+}
+
+function filterMemberDutiesByMemberAndDutyCode(memberCode, dutyCode) {
+  return function(element) {
+    if ((element[0] == memberCode) && (element[1] == dutyCode)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
+
 function getDutiesByMemberAndDutyCode(memberCode,dutyCode) {
   return dutyArray.filter(filterDutiesByMemberAndDutyCode(memberCode,dutyCode));
 }
