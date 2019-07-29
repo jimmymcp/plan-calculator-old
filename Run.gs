@@ -69,7 +69,11 @@ function awayDateSummary() {
 }
 
 function test() {
+  dutySetupArray = readArrayFromSheet('Duty Setup');
   dutyArray = readArrayFromSheet('Duties');
-  constraintSetupArray = readArrayFromSheet('Constraint Setup');  
-  updateConstraintsForDuty(138);
+  dutyConstraintArray = readArrayFromSheet('Duty Constraint');
+  populateMemberDutyArray();
+  constraintSetupArray = readArrayFromSheet('Constraint Setup');
+  updateConstraintsForDuty(367);
+  writeArrayToSheet(dutyConstraintArray,'Duty Constraint');
 }
