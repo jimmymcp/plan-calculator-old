@@ -25,9 +25,9 @@ function populateMemberDutyArray() {
   
   for (var i = 0; i < getNoOfMembers(); i++) {    
     for (var j = 0; j < getNoOfDutiesSetup(); j++) {
-      if (sheetArray[i + 1][j + 3] == 'Yes') {
+      if (sheetArray[i + 1][j + 6] == 'Yes') {
         //member code, duty code, number of instances
-        memberDutyArray.push([sheetArray[i + 1][0],sheetArray[0][j + 3],getDutiesByMemberAndDutyCode(sheetArray[i + 1][0],sheetArray[0][j + 3]).length]);
+        memberDutyArray.push([sheetArray[i + 1][0],sheetArray[0][j + 6],getDutiesByMemberAndDutyCode(sheetArray[i + 1][0],sheetArray[0][j + 6]).length]);
       }
     }
   }  
