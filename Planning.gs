@@ -1,7 +1,9 @@
 function updateCandidatesForDuties() {
   for (var i = 0; i < dutyArray.length; i++) {
-    updateConstraintsForDuty(i);
-    updateCandidatesForDuty(dutyArray[i][0],i);
+    if (dutyArray[i][4] === '') {
+      updateConstraintsForDuty(i);
+      updateCandidatesForDuty(dutyArray[i][0],i);
+    }
   }    
 }
 
