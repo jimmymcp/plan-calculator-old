@@ -21,7 +21,7 @@ function getCandidatesForDuty(duty: Duty): Member[] {
   getMembersByDuty(duty).forEach(member => {
     //if there isn't a reason that the member can't do the duty then add them to the list of candidates
     if (dutyConstraints.filter(dutyConstraint => {
-      dutyConstraint.MemberCode === member.Code && dutyConstraint.DutyNo === duty.DutyNo;
+      return dutyConstraint.MemberCode === member.Code && dutyConstraint.DutyNo === duty.DutyNo;
     }).length === 0) {
       candidates.push(member);
     }
@@ -105,10 +105,27 @@ function updateConstraintsForDuty(duty: Duty) {
 
       return (duty.Date >= constrainstStartDate && duty.Date <= constrainstEndDate);
     }).forEach(constrainedDuty => {
+      //find the member that is constrained by this duty (it may not be the same person doing the duty)
+      const constrainedMember = constraintSetupForDuty.ConstrainedMember !== '' ? constraintSetupForDuty.ConstrainedMember : duty.Member;
+
+      //only add the constraint if it doesn't already exist
+      if (dutyConstraints.filter(dutyConstraint => {
+        return dutyConstraint.DutyNo === constrainedDuty.DutyNo && dutyConstraint.MemberCode === constrainedMember;
+      }).length > 0) {
+        return;
+      }
+
+      //only add the constraint if the constrained member is a candidate for the duty
+      if (getCandidatesForDuty(constrainedDuty).filter(candidate => candidate.Code === constrainedMember).length === 0) {
+        return;
+      }
+
       dutyConstraints.push({
         DutyNo: constrainedDuty.DutyNo,
-        MemberCode: duty.Member,
-        Reason: `${duty.Member} ${duty.Description} on ${duty.Date}`
+        DutyCode: constrainedDuty.DutyCode,
+        Date: constrainedDuty.Date,
+        MemberCode: constrainedMember,
+        Reason: `${duty.Member} ${duty.Description} on ${duty.Date.toLocaleDateString()}`
       });
       updateCandidatesForDuty(constrainedDuty);
     });

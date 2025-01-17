@@ -62,6 +62,8 @@ type AwayDate = {
 
 type DutyConstraint = {
     DutyNo: number,
+    DutyCode: string,
+    Date: Date
     MemberCode: string,
-    Reason: string
+    Reason: string,
 }

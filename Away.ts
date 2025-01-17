@@ -26,18 +26,20 @@ function readAwayDates(): AwayDate[] {
   return awayDates;
 }
 
-function populateConstraintsForAwayDates() {
+function createConstraintsForAwayDates() {
   //loop through the away dates and create contrainsts for each duty that that member does
   awayDates.forEach(awayDate => {
     //foreach duty that the member who is away does insert a constraint
     const member = members.filter(member => member.Code === awayDate.Member)[0];
     member.Duties.forEach(memberDuty => {
-      const dutiesToConstrain = duties.filter(duty => duty.DutyCode === memberDuty.Code && duty.Date === awayDate.Date);
+      const dutiesToConstrain = duties.filter(duty => duty.DutyCode === memberDuty.Code && duty.Date.getFullYear() === awayDate.Date.getFullYear() && duty.Date.getMonth() === awayDate.Date.getMonth() && duty.Date.getDate() === awayDate.Date.getDate());
       dutiesToConstrain.forEach(dutyToConstrain => {
         dutyConstraints.push({
           DutyNo: dutyToConstrain.DutyNo,
+          DutyCode: dutyToConstrain.DutyCode,
+          Date: dutyToConstrain.Date,
           MemberCode: member.Code,
-          Reason: 'Away'
+          Reason: awayDate.AwayType.toString()
         })
       });
     });

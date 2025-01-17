@@ -8,7 +8,7 @@ function onOpen() {
     .addItem('Insert Away Dates', 'insertAwayDates')
     .addItem('Insert Away Date Constraints', 'insertAwayDateContraints')
     .addItem('Update Duty Constraints', 'updateDutyConstraints')
-    .addItem('Update Candidates for Duties', 'updateCandidatesForDuties2')
+    .addItem('Update Candidates for Duties', 'updateCandidatesForAllDuties')
     .addItem('Calculate Plan', 'calculatePlan')
     .addItem('Write Away Date Summary', 'awayDateSummary')
     .addToUi();
@@ -75,20 +75,30 @@ function datesAreEqual(date1: Date, date2: Date): boolean {
   }
 }
 
-function writeArrayToSheet(dataArray: any[], sheetName: string) {
+function writeArrayToSheet(dataArray: any[], sheetName: string, clearSheet: boolean = true) {
   const sheet = spreadsheet.getSheetByName(sheetName);
   if (!sheet) {
     return;
   }
 
-  sheet.clear();
+  if (clearSheet) {
+    sheet.clear();
+  }
+
+  if (dataArray.length === 0) {
+    return;
+  }
+
   const headers = Object.keys(dataArray[0]);
-  sheet.appendRow(headers);
+  for (let i = 0; i < headers.length; i++) {
+    sheet.getRange(1, i + 1).setValue(headers[i]);
+  }
   sheet.getRange(1, 1).setFontWeight('bold');
-  
-  for (var i = 1; i < dataArray.length; i++) {
-    const row = headers.map(header => dataArray[i][header]);
-    sheet.appendRow(row);
+
+  for (var i = 0; i < dataArray.length; i++) {
+    headers.forEach((header, index) => {
+      sheet.getRange(i + 2, index + 1).setValue(dataArray[i][header]);
+    });
   }
 }
 
