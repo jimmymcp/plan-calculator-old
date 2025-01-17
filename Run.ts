@@ -3,18 +3,26 @@
 /// <reference path="./Helper.ts" />
 /// <reference path="./Members.ts" />
 
-//globals
 const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-const dutySetups: DutySetup[] = readArrayFromSheet('Duty Setup') as unknown as DutySetup[];
-const awayDates: AwayDate[] = readAwayDates();
-const members: Member[] = readMembers();
-const constraintSetups: ConstraintSetup[] = readArrayFromSheet('Constraint Setup') as unknown as ConstraintSetup[];
-let duties: Duty[] = readArrayFromSheet('Duties') as unknown as Duty[];
-let dutyConstraints: DutyConstraint[] = readArrayFromSheet('Duty Constraint') as unknown as DutyConstraint[];
+let members: Member[] = [];
+let dutySetups: DutySetup[] = [];
+let duties: Duty[] = [];
+let dutyConstraints: DutyConstraint[] = [];
+let awayDates: AwayDate[] = [];
+let constraintSetups: ConstraintSetup[] = [];
+
+function readSheets() {
+  dutySetups = readTypeFromSheet<DutySetup>('Duty Setup');
+  duties = readTypeFromSheet<Duty>('Duties');
+  members = readMembers();
+  constraintSetups = readTypeFromSheet<ConstraintSetup>('Constraint Setup');
+  dutyConstraints = readTypeFromSheet<DutyConstraint>('Duty Constraint');
+}
 
 function insertDuties() {
-  clearDuties();
-  populateDuties(dutySetups);
+  readSheets();
+  duties = [];
+  createDuties(dutySetups);
   writeArrayToSheet(duties, 'Duties');
 }
 
@@ -23,6 +31,7 @@ function insertAwayDates() {
 }
 
 function insertAwayDateContraints() {
+  awayDates = readAwayDates();
   populateConstraintsForAwayDates();
   writeArrayToSheet(dutyConstraints, 'Duty Constraint');
 }

@@ -11,15 +11,19 @@ function readMembers(): Member[] {
   const memberArray: any[] = readArrayFromSheet('Members');
   memberArray.forEach((row, index) => {
     if (index === 0) {
-      return;
+      return; //column headers, we need them later for the duty codes
     }
 
     //duties start at column G (zero-based 6)
     let memberDuties: DutySetup[] = [];
     for (let column = 6; column < row.length; column++) {
       if (row[column] === 'Yes') {
-        let duty: DutySetup = dutySetups.filter(duty => duty.Code === memberArray[0][column])[0];
-        memberDuties.push(duty);
+        let filteredDuties: DutySetup[] = dutySetups.filter(duty => {
+          return duty.Code == memberArray[0][column]
+        });
+        if (filteredDuties.length > 0) {
+          memberDuties.push(filteredDuties[0]);
+        }
       }
     }
 
@@ -37,7 +41,7 @@ function readMembers(): Member[] {
 
 function getMemberFromName(firstName: string, surname: string): Member {
   const filteredMembers = members.filter(member => {
-    member.FirstName === firstName && member.LastName === surname;
+    return member.FirstName === firstName && member.LastName === surname;
   });
 
   if (filteredMembers.length === 0) {

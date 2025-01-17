@@ -8,29 +8,27 @@ function clearDuties() {
   sheet!.clear();
 }
 
-function populateDuties(dutySetups: DutySetup[]) {
+function createDuties(dutySetups: DutySetup[]) {
   var sheet = spreadsheet.getSheetByName('Duties');
   if (!sheet) {
     return;
   }
 
-  sheet.appendRow(['Entry No.', 'Duty Code', 'Description', 'Date', 'Member', 'Candidates', 'No. of Candidates']);
-  sheet.getRange(1, 1, 1, sheet.getLastColumn()).setFontWeight('bold');
-
   dutySetups.forEach(dutySetup => {
     if (dutySetup.Recurring) {
       populateRecurringDuty(dutySetup);
     }
-  })
+  });
+
+  duties = duties.sort((a, b) => a.DutyNo - b.DutyNo);
 }
 
 function populateRecurringDuty(dutySetup: DutySetup) {
   let dutyDate = getFirstGivenDayOfWeekAfterDate(dutySetup.RecurringDay, getStartDate());
   const endDate = getEndDate();
 
-  dutyNo += 1;
-
   while (dutyDate <= endDate) {
+    dutyNo++;
     duties.push({
       DutyNo: dutyNo,
       DutyCode: dutySetup.Code,
