@@ -3,13 +3,16 @@ function populateAwayDateData() {
   var awayDateArray2 = sheet.getRange(1, 1, sheet.getLastRow(),sheet.getLastColumn()).getValues();
   for (var column = 1; column < sheet.getLastColumn(); column++)
   {
-    var memberCode = getMemberCodeFromName(awayDateArray2[0][column],awayDateArray2[1][column]);
-    for (var row = 2; row < sheet.getLastRow(); row++)
+    if (awayDateArray2[1][column] != '') //allow columns to be used for non-members on the away dates sheet
     {
-      if (awayDateArray2[row][column] != '')
+      var memberCode = getMemberCodeFromName(awayDateArray2[0][column],awayDateArray2[1][column]);
+      for (var row = 2; row < sheet.getLastRow(); row++)
       {
-        var awayDate = new Date(awayDateArray2[row][0]);        
-        awayDateArray.push([memberCode,awayDate,awayDateArray2[row][column]]);
+        if (awayDateArray2[row][column] != '')
+        {
+          var awayDate = new Date(awayDateArray2[row][0]);        
+          awayDateArray.push([memberCode,awayDate,awayDateArray2[row][column]]);
+        }
       }
     }
   }

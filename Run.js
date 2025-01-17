@@ -30,6 +30,8 @@ function insertAwayDateContraints() {
 }
 
 function updateDutyConstraints() {
+  Logger.clear();
+  
   dutySetupArray = readArrayFromSheet('Duty Setup');
   dutyArray = readArrayFromSheet('Duties');
   dutyConstraintArray = readArrayFromSheet('Duty Constraint');

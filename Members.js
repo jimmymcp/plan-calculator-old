@@ -3,7 +3,11 @@ function getNoOfMembers() {
 }
 
 function getMemberCodeFromName(firstName, surname) {    
-  return memberArray.filter(memberArrayFilter(firstName,surname))[0][0];
+  var member = memberArray.filter(memberArrayFilter(firstName,surname));
+  if (member.length === 0) {
+    throw 'Cannot find ' + firstName + ' ' + surname;
+  }
+  return member[0][0];
 }
 
 function memberArrayFilter(firstName,surname) {

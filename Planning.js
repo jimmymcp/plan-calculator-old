@@ -1,6 +1,6 @@
 function updateCandidatesForDuties() {
   for (var i = 0; i < dutyArray.length; i++) {
-    if (dutyArray[i][4] === '') {
+    if (dutyArray[i][4] == '') {
       updateConstraintsForDuty(i);
       updateCandidatesForDuty(dutyArray[i][0],i);
     }
@@ -111,8 +111,10 @@ function planDuty(dutyIndex) {
 }
 
 function updateConstraintsForDuty(dutyIndex) {
+  Logger.log(`Update contraints for duty ${dutyIndex} ${dutyArray[dutyIndex]}`);
   var constraintsForDuty = getConstraintSetupForMemberAndDuty(dutyArray[dutyIndex][4],dutyArray[dutyIndex][1]);
   for (var i = 0; i < constraintsForDuty.length; i++) {
+    Logger.log('  Processing duty constraint ' + constraintsForDuty[i])
     var startDate = addDaysToDate(constraintsForDuty[i][6] * -1,dutyArray[dutyIndex][3]);
     var endDate = addDaysToDate(constraintsForDuty[i][6],dutyArray[dutyIndex][3]);
     var constrainedDuties = getDutiesByDutyFilterAndDateRange(constraintsForDuty[i][5],startDate,endDate);
@@ -121,6 +123,7 @@ function updateConstraintsForDuty(dutyIndex) {
         //only add constraints for duties that the member actually does
         if (memberDoesDuty(dutyArray[dutyIndex][4], constrainedDuties[j][1])) {
           dutyConstraintArray.push([constrainedDuties[j][0],dutyArray[dutyIndex][4],constraintsForDuty[i][1],dutyIndex,dutyArray[dutyIndex][1],dutyArray[dutyIndex][3]]);
+          Logger.log(`    Adding constraint ${constrainedDuties[j][0]} ${dutyArray[dutyIndex][4]} ${constraintsForDuty[i][1]} ${dutyIndex,dutyArray[dutyIndex][1]} ${dutyArray[dutyIndex][3]}`);
           updateCandidatesForDuty(constrainedDuties[j][0],-1);
         }
       }
