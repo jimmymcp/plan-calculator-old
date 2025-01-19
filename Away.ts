@@ -32,7 +32,7 @@ function createConstraintsForAwayDates() {
     //foreach duty that the member who is away does insert a constraint
     const member = members.filter(member => member.Code === awayDate.Member)[0];
     member.Duties.forEach(memberDuty => {
-      const dutiesToConstrain = duties.filter(duty => duty.DutyCode === memberDuty.Code && duty.Date.getFullYear() === awayDate.Date.getFullYear() && duty.Date.getMonth() === awayDate.Date.getMonth() && duty.Date.getDate() === awayDate.Date.getDate());
+      const dutiesToConstrain = duties.filter(duty => duty.DutyCode === memberDuty.Code && datesAreEqual(duty.Date, awayDate.Date));
       dutiesToConstrain.forEach(dutyToConstrain => {
         dutyConstraints.push({
           DutyNo: dutyToConstrain.DutyNo,
@@ -45,56 +45,3 @@ function createConstraintsForAwayDates() {
     });
   });
 }
-
-// function writeDutyConstraint(dutyNo, memberCode, reason) {
-//   var sheet = spreadsheet.getSheetByName('Duty Constraint');
-//   sheet.appendRow([dutyNo, memberCode, reason]);
-// }
-
-// function writeAwayDateSummary() {
-//   var sheet = spreadsheet.getSheetByName('Away Date Summary');
-
-//   sheet.clear();
-
-//   var startDate = getFirstGivenDayOfWeekAfterDate(0, getStartDate()); //0 = Sunday
-//   var endDate = getEndDate();
-
-//   var awayDateSummaryArray = [];
-
-//   while (startDate <= endDate) {
-//     sheet.appendRow([startDate, getAwayDateSummaryForDate(startDate)]);
-//     startDate = addDaysToDate(7, startDate);
-//   }
-
-//   writeArrayToSheet(awayDateSummaryArray, 'Away Date Summary');
-// }
-
-// function getAwayDateSummaryForDate(date) {
-//   var awayDatesOnDate = getAwayDatesByDate(date);
-//   var summary = '';
-//   for (var i = 0; i < awayDatesOnDate.length; i++) {
-//     summary += ',' + awayDatesOnDate[i][0];
-//   }
-
-//   if (summary.length > 0) {
-//     return summary.substr(1, summary.length - 1);
-//   }
-//   else {
-//     return '';
-//   }
-// }
-
-// function getAwayDatesByDate(date) {
-//   return awayDateArray.filter(awayDatesByDateFilter(date));
-// }
-
-// function awayDatesByDateFilter(date) {
-//   return function (element) {
-//     if ((element[1].getTime() == date.getTime()) && element[2] == 'Away') {
-//       return true;
-//     }
-//     else {
-//       return false;
-//     }
-//   }
-// }

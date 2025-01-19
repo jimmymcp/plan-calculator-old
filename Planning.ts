@@ -30,26 +30,6 @@ function getCandidatesForDuty(duty: Duty): Member[] {
   return candidates;
 }
 
-// function readDutyConstraintArray() {
-//   var sheet = spreadsheet.getSheetByName('Duty Constraint');
-//   dutyConstraintArray = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
-// }
-
-// function getDutyConstraintByMemberAndDutyNo(memberCode, dutyNo) {
-//   return dutyConstraintArray.filter(dutyConstraintByMemberAndDutyNoFilter(memberCode, dutyNo));
-// }
-
-// function dutyConstraintByMemberAndDutyNoFilter(memberCode, dutyNo) {
-//   return function (element) {
-//     if ((element[0] == dutyNo) && (element[1] == memberCode)) {
-//       return true;
-//     }
-//     else {
-//       return false;
-//     }
-//   }
-// }
-
 function getMostConstrainedDuty(): Duty | undefined {
   //find the duty with the fewest candidates (but more than 0)
   const sortedDuties = duties.filter(duty => duty.NoOfCandidates > 0).sort((a, b) => a.NoOfCandidates - b.NoOfCandidates);
