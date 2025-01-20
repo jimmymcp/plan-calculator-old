@@ -45,3 +45,17 @@ function createConstraintsForAwayDates() {
     });
   });
 }
+
+function insertAwayDateSummary() {
+  let awayDateSummary: AwayDateSummary[] = [];
+  let startDate = getFirstGivenDayOfWeekAfterDate('sunday', getStartDate());
+  const endDate = getEndDate();
+  while (startDate <= endDate) {
+    //get a comma separated list of members who are away on this date
+    const membersAway = awayDates.filter(awayDate => datesAreEqual(awayDate.Date, startDate)).map(awayDate => awayDate.Member).join(',');
+    awayDateSummary.push({ Date: startDate, Members: membersAway });
+    startDate = addDaysToDate(7, startDate)
+  }
+
+  writeArrayToSheet(awayDateSummary, 'Away Date Summary', true);
+}

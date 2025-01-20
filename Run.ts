@@ -61,7 +61,6 @@ function calculatePlan() {
 }
 
 function awayDateSummary() {
-  throw 'Not implemented';
-  // awayDateArray = readArrayFromSheet('Away Date Data');
-  // writeAwayDateSummary();
+  readSheets();
+  insertAwayDateSummary();
 }

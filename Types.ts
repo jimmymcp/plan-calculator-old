@@ -67,3 +67,8 @@ type DutyConstraint = {
     MemberCode: string,
     Reason: string,
 }
+
+type AwayDateSummary = {
+    Date: Date,
+    Members: string
+}
